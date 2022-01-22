@@ -1,0 +1,25 @@
+version: 2.1
+
+setup: true
+
+orbs:
+  continuation: circleci/continuation@0.1.2
+  ci: kydeps/ci@dev:alpha
+
+jobs:          
+  generate-build-universe:
+    executor: ci/kydeps
+    working_directory: "~/src"
+    steps:
+      - checkout
+      - run: cd ~/src && git submodule update --init --recursive
+      - run: cmake -S ~/src -D KYDEPS_CI_UNIVERSE_CONFIGURE=ON
+      - run: cat universe.yml
+      - continuation/continue:
+          configuration_path: universe.yml
+
+
+workflows:
+  setup:
+    jobs:
+      - generate-build-universe
