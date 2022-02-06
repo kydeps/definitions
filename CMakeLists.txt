@@ -35,6 +35,13 @@ message(
         "
     KYDEPS_DEFINITIONS_GIT_REPOSITORY   = ${KYDEPS_DEFINITIONS_GIT_REPOSITORY}
     KYDEPS_DEFINITIONS_GIT_TAG          = ${KYDEPS_DEFINITIONS_GIT_TAG}
+    KYDEPS_TARGETS                      = ${KYDEPS_TARGETS}
         ")
 
-IncludeGlob("*.cmake")
+if("-${KYDEPS_TARGETS}-" STREQUAL "--")
+    IncludeGlob("*.cmake")
+else()
+    foreach(TARGET ${KYDEPS_TARGETS})
+        include("${TARGET}.cmake")
+    endforeach(TARGET ${KYDEPS_TARGETS})
+endif()
