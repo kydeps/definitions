@@ -38,7 +38,7 @@ message(
     KYDEPS_TARGETS                      = ${KYDEPS_TARGETS}
         ")
 
-if("-${KYDEPS_TARGETS}-" STREQUAL "--")
+if("-${KYDEPS_TARGETS}-" STREQUAL "--" OR "-${KYDEPS_TARGETS}-" STREQUAL "-all-")
     IncludeGlob("*.cmake")
 else()
     foreach(TARGET ${KYDEPS_TARGETS})
